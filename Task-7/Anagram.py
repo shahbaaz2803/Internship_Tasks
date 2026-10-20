@@ -1,15 +1,20 @@
 # Anagram
 # https://www.hackerrank.com/challenges/anagram/problem
 
+from collections import Counter
+
 def anagram(s):
     if len(s) % 2 != 0:
         return -1
 
     half = len(s) // 2
-    first = s[:half]
-    second = s[half:]
+    first = Counter(s[:half])
+    second = Counter(s[half:])
 
-    for ch in second:
-        first = first.replace(ch, "", 1)
+    changes = 0
 
-    return len(first)
+    for ch in first:
+        if first[ch] > second[ch]:
+            changes += first[ch] - second[ch]
+
+    return changes
